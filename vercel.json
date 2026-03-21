@@ -1,0 +1,36 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "client/package.json",
+      "use": "@vercel/static-build",
+      "config": { "distDir": "dist" }
+    },
+    {
+      "src": "server/index.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "ai/main.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/api/analyze-style",
+      "destination": "ai/main.py"
+    },
+    {
+      "source": "/api/analyze-body-type",
+      "destination": "ai/main.py"
+    },
+    {
+      "source": "/api/(.*)",
+      "destination": "server/index.js"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "client/$1"
+    }
+  ]
+}

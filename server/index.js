@@ -13,23 +13,12 @@ app.use(cors());
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
-// Ensure uploads folder exists
-const uploadsDir = path.join(__dirname, '../uploads');
-if (!fs.existsSync(uploadsDir)){
-    fs.mkdirSync(uploadsDir);
-}
-
 // Multer storage
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, uploadsDir)
-  },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + '-' + file.originalname)
-  }
+const storage = multer.memoryStorage();
+const upload = multer({ 
+    storage: storage,
+    limits: { fileSize: 10 * 1024 * 1024 } // 10MB limit
 });
-
-const upload = multer({ storage: storage });
 
 // Routes
 app.get('/api/clothes', (req, res) => {
@@ -47,7 +36,13 @@ app.post('/api/upload-photo', upload.single('photo'), (req, res) => {
   if (!req.file) {
     return res.status(400).send('No file uploaded.');
   }
-  res.json({ filename: req.file.filename, path: req.file.path });
+  // Since we use memory storage on Vercel, we can't return a local path.
+  // The frontend should ideally send this file to the AI service or cloud storage.
+  res.json({ 
+      filename: req.file.originalname, 
+      mimetype: req.file.mimetype,
+      size: req.file.size
+  });
 });
 
 app.post('/api/analyze-style', (req, res) => {
