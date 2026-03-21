@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # VibeFit – AI Outfit Stylist & Virtual Try-On
 
 VibeFit is a modern AI-powered fashion stylist application that helps users discover their style and virtually try on outfits.
@@ -28,3 +29,7 @@ VibeFit is a modern AI-powered fashion stylist application that helps users disc
 - **Outfit Stylist**: Browse clothing categories and apply them to the model.
 - **Smart Recommendations**: Personalized suggestions based on AI analysis.
 - **Premium UI**: Clean, minimal, and modern design with smooth animations.
+=======
+# VibeFit
+VibeFit is a modern fitness and wellness platform designed to help users track workouts, monitor progress, and maintain a healthy lifestyle with an intuitive and engaging interface.
+>>>>>>> 7a9ffd91d895ffe98a571729341b8cd2d6f4a473
